@@ -66,6 +66,7 @@ function addElement (event) {
 function drawRandom() {
     let figureArray = generateRandomShape();
     drawImage(figureArray, objects);
+    getRating(figureArray, objects);
 }
 
 function clearDrawing() {
