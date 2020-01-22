@@ -7,6 +7,8 @@ function unique(figureArray, x, y) {
     return true;
 }
 
+// jakiś commit
+
 function generateRandomShape() {
     let figureSize = 20;
 
