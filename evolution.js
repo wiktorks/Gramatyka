@@ -80,17 +80,6 @@ function generateRandomShape() {
     return figureArray;
 }
 
-/* function checkConnection(x, y) {
-    if(x > 0 && y > 0 && x < 20 && y < 20) {
-        if(objects[x][y].isSVG === 1) {
-            totalConnections++;
-            if(objects[x][y].rotate === 3 || objects[x][y].rotate === 2)
-                goodConnections++;
-        }
-    }
-    
-} */
-
 function getRating(figure, objects) {
     let totalConnections = 0;
     let goodConnections = 0;
@@ -118,9 +107,20 @@ function getRating(figure, objects) {
                 goodConnections++;
         }
     }
-    console.log(`dobre połączenia: ${goodConnections} - wszystkie: ${totalConnections}`);
     return goodConnections / totalConnections;
 }
+
+function initGenetarion(population) {
+    for (let i = 0; i < 20; i++) {
+        let individual = generateRandomShape();
+        individual.forEach(element => {
+            objects[element.x][element.y] = { isSVG: 1, rotate: element.angle };
+        });
+
+        population[i] = {individual: individual, rating: getRating(individual, objects)};
+    }
+}
+
 
 function drawImage(figureArray, objects) {
     figureArray.forEach(element => {
@@ -129,13 +129,4 @@ function drawImage(figureArray, objects) {
     updateDOM(objects);
 }
 
-// let figureArray = new Array(5);
-// let figure = {x: 10, y: 10, angle: 0};
-// figureArray[0] = Object.assign({}, figure);
-// console.log(figureArray[0])
-// figure.x = 23;
-// console.log(figureArray[0])
-
-// let figureArray = new Array(20);
-//     figureArray[0] = { x: 10, y: 10, angle: 0 };
-//     console.log(figureArray[1]);
+initGenetarion();
