@@ -31,6 +31,24 @@
         </div>
         <div id="delete"></div>
     </div>
+    <div class="evolution-panel">
+        <h1>Ewoluszyn</h1>
+        <form>
+            <label for="iter-number">Ilość iteracji:</label>
+            <input type="number" name="iter-number" id="iter">
+
+            <label for="generation">Pokolenie:</label>
+            <input type="number" name="generation" id="genr" readonly>
+
+            <label for="best-rating">Najepszy osobnik:</label>
+            <input type="number" name="best-rating" id="best"readonly>
+
+            <div class="button-field">
+                <button id="iterate">Iteracja</button>
+                <button id="reset">Resetuj</button>
+            </div>
+        </form>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <!-- <script src="jquery.js"></script> -->
     <script src="evolution.js"></script>
