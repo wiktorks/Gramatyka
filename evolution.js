@@ -123,10 +123,9 @@ function initGenetarion(population) {
 
 
 function drawImage(figureArray, objects) {
+    clearDrawing();
     figureArray.forEach(element => {
         objects[element.x][element.y] = { isSVG: 1, rotate: element.angle };
     });
     updateDOM(objects);
 }
-
-initGenetarion();

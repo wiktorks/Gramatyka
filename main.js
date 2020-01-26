@@ -16,6 +16,8 @@ for (let i = 0; i < 20; i++) {
     objects[i] = new Array(20);
 }
 
+let population = new Array(20);
+
 $(document).ready(function () {
 
     for (let i = 0; i < 20; i++) {
@@ -31,7 +33,7 @@ $(document).ready(function () {
     $('#10-10').addClass('selected');
     updateDOM(objects);
 
-    drawRandom();
+    // drawRandom();
 
     $('.item').on('click', function () {
         if (this.childNodes.length > 0) {
@@ -39,6 +41,18 @@ $(document).ready(function () {
             $(this).addClass('selected');
         }
     });
+    initGenetarion(population);
+    population.sort((a, b) => {
+        return a.rating > b.rating;
+    });
+    for (item of population) {
+        console.log(item.rating);
+    }
+    console.log('----------');
+    // console.log(population.pop().rating)
+    let test = population.pop();
+    console.log(test.rating);
+    drawImage(test.individual, objects);
 
     $('#left .top').on('click', {sideCoordinates: '30', isLeft: false, objects: objects}, addElement);
     $('#left .bottom').on('click', {sideCoordinates: '30', isLeft: true, objects: objects}, addElement);
