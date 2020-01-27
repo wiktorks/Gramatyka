@@ -150,7 +150,51 @@ function drawImage(figureArray, objects) {
 }
 
 function simulation() {
-    if (evolIteration === 0) initGenetarion(population);
+    if (evolIteration === 0) {
+        initGenetarion(population);
+    } else {
+        population = [...best];
+        let increment = 1;
+        let iter = 0;
+
+        for (let i = 0; i < 15; i++) {
+            if (i >= 8) {
+                increment = 2;
+            } else if (i > 13) {
+                increment = 3;
+            }
+
+            let figure;
+            if (i % 2 === 0) {
+                figure = best[iter].individual
+                    .slice(0, best[iter].individual.length / 2)
+                    .concat(
+                        best[iter + increment].individual.slice(
+                            best[iter + increment].individual.length / 2,
+                            best[iter + increment].individual.length
+                        )
+                    );
+            } else {
+                figure = best[iter].individual
+                    .slice(
+                        best[iter].individual.length / 2,
+                        best[iter].individual.length
+                    )
+                    .concat(
+                        best[iter + increment].individual.slice(
+                            0,
+                            best[iter + increment].individual.length / 2
+                        )
+                    );
+                iter = (iter + 1) % 5;
+            }
+
+            population.push({
+                individual: figure,
+                rating: getRating(figure, objects)
+            });
+        }
+    }
 
     population.sort((a, b) => {
         return a.rating > b.rating;
@@ -163,103 +207,5 @@ function simulation() {
         });
     }
 
-    population = [...best];
-    let increment = 1;
-    
-    for(let i=0; i<8; i++) {
-        let iter = i % 5;
-        if(i >= 4) {
-            increment = 2;
-        } else if(i > 6) {
-            increment = 3;
-        }
-
-        let figure = best[iter].individual
-            .slice(0, best[iter].individual.length / 2)
-            .concat(
-                best[iter + increment].individual.slice(
-                    best[iter + increment].individual.length / 2,
-                    best[iter + increment].individual.length
-                )
-            );
-
-        population.push({
-            individual: figure,
-            rating: getRating(figure, objects)
-        });
-
-        let figure = best[iter].individual
-            .slice(best[iter].individual.length / 2, best[iter].individual.length)
-            .concat(
-                best[iter + increment].individual.slice(
-                    0,
-                    best[iter + increment].individual.length / 2
-                )
-            );
-
-        population.push({
-            individual: figure,
-            rating: getRating(figure, objects)
-        });
-    }
-
-    /* for (let i = 0; i < 4; i++) {
-        let figure = best[i].individual
-            .slice(0, best[i].individual.length / 2)
-            .concat(
-                best[i + 1].individual.slice(
-                    best[i + 1].individual.length / 2,
-                    best[i + 1].individual.length
-                )
-            );
-
-        population.push({
-            individual: figure,
-            rating: getRating(figure, objects)
-        });
-
-        let figure = best[i].individual
-            .slice(best[i].individual.length / 2, best[i].individual.length)
-            .concat(
-                best[i + 1].individual.slice(
-                    0,
-                    best[i + 1].individual.length / 2
-                )
-            );
-
-        population.push({
-            individual: figure,
-            rating: getRating(figure, objects)
-        });
-    }
-
-    for(let i = 0; i < 3; i++) {
-        let figure = best[i].individual
-            .slice(0, best[i].individual.length / 2)
-            .concat(
-                best[i + 2].individual.slice(
-                    best[i + 2].individual.length / 2,
-                    best[i + 2].individual.length
-                )
-            );
-
-        population.push({
-            individual: figure,
-            rating: getRating(figure, objects)
-        });
-
-        let figure = best[i].individual
-            .slice(best[i].individual.length / 2, best[i].individual.length)
-            .concat(
-                best[i + 2].individual.slice(
-                    0,
-                    best[i + 2].individual.length / 2
-                )
-            );
-
-        population.push({
-            individual: figure,
-            rating: getRating(figure, objects)
-        });
-    } */
+    evolIteration++;
 }
