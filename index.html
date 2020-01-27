@@ -35,13 +35,20 @@
         <h1>Ewoluszyn</h1>
         <form>
             <label for="iter-number">Ilość iteracji:</label>
-            <input type="number" name="iter-number" id="iter">
+            <input type="number" name="iter-number" id="iter" placeholder="10">
 
             <label for="generation">Pokolenie:</label>
             <input type="number" name="generation" id="genr" readonly>
 
             <label for="best-rating">Najepszy osobnik:</label>
-            <input type="number" name="best-rating" id="best"readonly>
+            <select name="best-rating" id="best">
+                <option value="1" selected>1 najlepszy</option>
+                <option value="2">2 najlepszy</option>
+                <option value="3">3 najlepszy</option>
+                <option value="4">4 najlepszy</option>
+                <option value="5">5 najlepszy</option>
+            </select>
+            <!-- <input type="number" name="best-rating" id="best"readonly> -->
 
             <div class="button-field">
                 <button id="iterate">Iteracja</button>
@@ -49,8 +56,8 @@
             </div>
         </form>
     </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <!-- <script src="jquery.js"></script> -->
     <script src="evolution.js"></script>
     <script src="drawing.js"></script>
     <script src="main.js"></script>

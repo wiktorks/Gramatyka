@@ -13,41 +13,43 @@ let mySVG = `<svg height="100" width="100">
 
 // let objects = new Array(20);
 
-function addElement (event) {
+function addElement(event) {
     let sideCoordinates = event.data.sideCoordinates;
     let isLeft = event.data.isLeft;
-    let currentObject = $('.selected');
-    let [row, column] = currentObject.attr('id').split('-');
+    let currentObject = $(".selected");
+    let [row, column] = currentObject.attr("id").split("-");
     let objects = event.data.objects;
-    let newRow = row, newColumn = column, newRotate;
+    let newRow = row,
+        newColumn = column,
+        newRotate;
 
     switch (sideCoordinates) {
-        case '01':
+        case "01":
             newRow--;
             newRotate = isLeft ? 3 : 2;
             break;
 
-        case '12': 
+        case "12":
             newColumn++;
             newRotate = isLeft ? 0 : 3;
             break;
 
-        case '23':
+        case "23":
             newRow++;
             newRotate = isLeft ? 0 : 1;
             break;
 
-        case '30':
+        case "30":
             newColumn--;
             newRotate = isLeft ? 2 : 1;
             break;
     }
 
-    if(objects[newRow][newColumn].isSVG === 0) {
-        objects[newRow][newColumn] = {isSVG: 1, rotate: newRotate};
+    if (objects[newRow][newColumn].isSVG === 0) {
+        objects[newRow][newColumn] = { isSVG: 1, rotate: newRotate };
         updateDOM(objects);
-        currentObject.removeClass('selected');
-        $(`#${newRow}-${newColumn}`).addClass('selected');
+        currentObject.removeClass("selected");
+        $(`#${newRow}-${newColumn}`).addClass("selected");
     }
 }
 
@@ -58,13 +60,13 @@ function drawRandom() {
 }
 
 function clearDrawing() {
-    for(let i = 0; i < 20; i++) {
-        for(let j=0; j<20; j++) {
-            objects[i][j] = {isSVG: 0, rotate: 0};
+    for (let i = 0; i < 20; i++) {
+        for (let j = 0; j < 20; j++) {
+            objects[i][j] = { isSVG: 0, rotate: 0 };
         }
     }
     objects[10][10] = { isSVG: 1, rotate: 0 };
-    $('#10-10').addClass('selected');
+    $("#10-10").addClass("selected");
     updateDOM(objects);
 }
 
@@ -74,8 +76,9 @@ function updateDOM(objects) {
             let cell = $(`#${i}-${j}`);
             if (objects[i][j].isSVG !== 0) {
                 cell.html(mySVG);
-                cell.children().first().attr('transform', `rotate(${objects[i][j].rotate * 90})`);
-
+                cell.children()
+                    .first()
+                    .attr("transform", `rotate(${objects[i][j].rotate * 90})`);
             } else {
                 cell.empty();
             }
