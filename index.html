@@ -35,7 +35,7 @@
         <h1>Ewoluszyn</h1>
         <form>
             <label for="iter-number">Ilość iteracji:</label>
-            <input type="number" name="iter-number" id="iter" placeholder="10">
+            <input type="number" name="iter-number" id="iter" value="1">
 
             <label for="generation">Pokolenie:</label>
             <input type="number" name="generation" id="genr" readonly>
@@ -48,8 +48,8 @@
                 <option value="4">4 najlepszy</option>
                 <option value="5">5 najlepszy</option>
             </select>
-            <!-- <input type="number" name="best-rating" id="best"readonly> -->
-
+            <label for="rating">Ocena:</label>
+            <input type="number" name="rating" id="rate" readonly>
             <div class="button-field">
                 <button id="iterate">Iteracja</button>
                 <button id="reset">Resetuj</button>

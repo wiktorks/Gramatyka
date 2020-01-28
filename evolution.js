@@ -149,63 +149,71 @@ function drawImage(figureArray, objects) {
     updateDOM(objects);
 }
 
-function simulation() {
-    if (evolIteration === 0) {
-        initGenetarion(population);
-    } else {
-        population = [...best];
-        let increment = 1;
-        let iter = 0;
+function simulation(e) {
+    e.preventDefault();
+    // debugger;
+    let iterations = document.getElementById('iter').value;
+    for (let gens = 0; gens < iterations; gens++) {
+        if (evolIteration === 0) {
+            initGenetarion(population);
+        } else {
+            population = [...best];
+            let increment = 1;
+            let iter = 0;
 
-        for (let i = 0; i < 15; i++) {
-            if (i >= 8) {
-                increment = 2;
-            } else if (i > 13) {
-                increment = 3;
-            }
+            for (let i = 0; i < 15; i++) {
+                if (i >= 8) {
+                    increment = 2;
+                    iter = 0;
+                } else if (i > 13) {
+                    increment = 3;
+                    iter = 0;
+                }
 
-            let figure;
-            if (i % 2 === 0) {
-                figure = best[iter].individual
-                    .slice(0, best[iter].individual.length / 2)
-                    .concat(
-                        best[iter + increment].individual.slice(
-                            best[iter + increment].individual.length / 2,
-                            best[iter + increment].individual.length
+                let figure;
+                if (i % 2 === 0) {
+                    figure = best[iter].individual
+                        .slice(0, best[iter].individual.length / 2)
+                        .concat(
+                            best[iter + increment].individual.slice(
+                                best[iter + increment].individual.length / 2,
+                                best[iter + increment].individual.length
+                            )
+                        );
+                } else {
+                    figure = best[iter].individual
+                        .slice(
+                            best[iter].individual.length / 2,
+                            best[iter].individual.length
                         )
-                    );
-            } else {
-                figure = best[iter].individual
-                    .slice(
-                        best[iter].individual.length / 2,
-                        best[iter].individual.length
-                    )
-                    .concat(
-                        best[iter + increment].individual.slice(
-                            0,
-                            best[iter + increment].individual.length / 2
-                        )
-                    );
-                iter = (iter + 1) % 5;
-            }
+                        .concat(
+                            best[iter + increment].individual.slice(
+                                0,
+                                best[iter + increment].individual.length / 2
+                            )
+                        );
+                    iter = (iter + 1) % 5;
+                }
 
-            population.push({
-                individual: figure,
-                rating: getRating(figure, objects)
+                population.push({
+                    individual: figure,
+                    rating: getRating(figure, objects)
+                });
+            }
+        }
+
+        population.sort((a, b) => {
+            return a.rating > b.rating;
+        });
+
+        for (let i = 0; i < 5; i++) {
+            best[i] = population.pop();
+            best[i].individual.sort((a, b) => {
+                return a.x > b.x;
             });
         }
+
+        evolIteration++;
     }
-
-    population.sort((a, b) => {
-        return a.rating > b.rating;
-    });
-
-    for (let i = 0; i < 5; i++) {
-        best[i] = population.pop();
-        best[i].individual.sort((a, b) => {
-            return a.y > b.y;
-        });
-    }
-
-    evolIteration++;
+    document.getElementById('genr').value = evolIteration;
 }

@@ -85,3 +85,9 @@ function updateDOM(objects) {
         }
     }
 }
+
+function drawBestImage() {
+    let bestNum = document.getElementById("best").value;
+    document.getElementById("rate").value = best[bestNum-1].rating;
+    drawImage(best[bestNum-1].individual, objects);
+}

@@ -15,6 +15,11 @@ for (let i = 0; i < 20; i++) {
     objects[i] = new Array(20);
 }
 
+const sim_event = (event, arg) => {
+    event.preventDefault();
+    console.log(arg);
+}
+
 let population = new Array(20);
 let best = new Array(5);
 let evolIteration = 0;
@@ -47,9 +52,14 @@ $(document).ready(function() {
         console.log(item.rating);
     }
     console.log("----------");
-    let test = population.pop();
-    console.log(test.rating);
-    drawImage(test.individual, objects);
+
+    for (let i = 0; i < 5; i++) {
+        best[i] = population.pop();
+        best[i].individual.sort((a, b) => {
+            return a.x > b.x;
+        });
+    }
+
 
     $("#left .top").on(
         "click",
@@ -96,4 +106,7 @@ $(document).ready(function() {
     );
 
     $("#delete").on("click", clearDrawing);
+
+    $("#iterate").on("click", simulation);
+    $('#best').on("change", drawBestImage);
 });
